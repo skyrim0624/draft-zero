@@ -217,7 +217,7 @@ ipcMain.handle('show-window', () => {
 // ====== App Lifecycle ======
 
 app.whenReady().then(() => {
-  if (process.platform === 'darwin') {
+  if (process.platform === 'darwin' && app.dock) {
     const iconPath = isDev 
       ? path.join(__dirname, '..', 'public', 'icon.png')
       : path.join(__dirname, '..', 'dist', 'icon.png')
