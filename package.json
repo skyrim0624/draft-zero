@@ -1,0 +1,33 @@
+{
+  "name": "draft-zero",
+  "version": "1.0.0",
+  "description": "零号草稿 — 行动力引擎，用强制限时契约打破完美主义",
+  "main": "dist-electron/main.js",
+  "scripts": {
+    "build:electron": "tsc -p tsconfig.electron.json && cp electron/vfx-overlay.html dist-electron/",
+    "dev": "npm run build:electron && concurrently \"vite\" \"wait-on http://localhost:5173 && electron .\"",
+    "build": "vite build && npm run build:electron",
+    "preview": "electron ."
+  },
+  "keywords": ["productivity", "timer", "anti-procrastination"],
+  "author": "Andreas",
+  "license": "MIT",
+  "dependencies": {
+    "canvas-confetti": "^1.9.3",
+    "electron": "^36.3.2",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@types/canvas-confetti": "^1.6.4",
+    "@types/node": "^22.15.2",
+    "@types/react": "^19.1.2",
+    "@types/react-dom": "^19.1.2",
+    "@vitejs/plugin-react": "^4.4.1",
+    "concurrently": "^9.1.2",
+    "electron-builder": "^25.1.8",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.2",
+    "wait-on": "^8.0.3"
+  }
+}
