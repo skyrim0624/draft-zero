@@ -59,6 +59,8 @@ export default function App() {
     const engine = new TimerEngine(
       (rem) => setRemaining(rem),
       () => {
+        // 倒计时结束：通知主进程抖动图标 + 弹出窗口 + 播放提示音
+        window.draftzero?.timerDone()
         setPhase('evaluate')
       }
     )

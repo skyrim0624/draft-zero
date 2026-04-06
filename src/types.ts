@@ -21,6 +21,7 @@ export interface DraftZeroAPI {
   mouseLeaveWindow: () => Promise<void>
   pinWindow: () => Promise<void>
   unpinWindow: () => Promise<void>
+  timerDone: () => Promise<void>
 }
 
 declare global {

@@ -21,4 +21,6 @@ contextBridge.exposeInMainWorld('draftzero', {
   // 锁定窗口 — 用户开始交互后不自动收回
   pinWindow: () => ipcRenderer.invoke('pin-window'),
   unpinWindow: () => ipcRenderer.invoke('unpin-window'),
+  // 倒计时结束通知
+  timerDone: () => ipcRenderer.invoke('timer-done'),
 })

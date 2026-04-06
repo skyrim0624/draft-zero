@@ -1,7 +1,7 @@
 {
   "name": "doitdoit",
   "productName": "DoitDoit",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "零号草稿 — 行动力引擎，用强制限时契约打破完美主义",
   "main": "dist-electron/main.js",
   "scripts": {
@@ -28,7 +28,11 @@
       "package.json"
     ]
   },
-  "keywords": ["productivity", "timer", "anti-procrastination"],
+  "keywords": [
+    "productivity",
+    "timer",
+    "anti-procrastination"
+  ],
   "author": "Andreas",
   "license": "MIT",
   "dependencies": {

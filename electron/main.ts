@@ -161,6 +161,37 @@ ipcMain.handle('unpin-window', () => {
   windowPinned = false
 })
 
+// 倒计时结束 — 抖动 tray 图标 + 弹出窗口 + 系统提示音
+ipcMain.handle('timer-done', async () => {
+  // 1. 系统提示音
+  const { shell } = await import('electron')
+  shell.beep()
+
+  // 2. Dock 图标弹跳（macOS）
+  if (process.platform === 'darwin' && app.dock) {
+    app.dock.bounce('critical')
+  }
+
+  // 3. Tray 图标抖动动画 — 快速切换带偏移的图标
+  if (tray) {
+    const originalIcon = createTrayIcon()
+    const shakeIcon = createTrayIcon()
+    let shakeCount = 0
+    const shakeInterval = setInterval(() => {
+      // 交替使用两个图标触发视觉刷新（配合 Dock bounce 产生抖动感）
+      tray?.setImage(shakeCount % 2 === 0 ? shakeIcon : originalIcon)
+      shakeCount++
+      if (shakeCount >= 8) {
+        clearInterval(shakeInterval)
+        tray?.setImage(originalIcon)
+      }
+    }, 100)
+  }
+
+  // 4. 自动弹出窗口
+  showMainWindow()
+})
+
 ipcMain.handle('write-achievement', async (_event, data: {
   taskName: string
   duration: number
