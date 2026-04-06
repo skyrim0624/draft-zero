@@ -227,24 +227,13 @@ app.whenReady().then(() => {
   const trayIcon = createTrayIcon()
 
   tray = new Tray(trayIcon)
-  tray.setToolTip('Draft Zero — 零号草稿')
+  tray.setToolTip('DoitDoit')
 
-  // 鼠标悬停展开 — 跟 Floating Todo 一致的交互
-  tray.on('mouse-enter', () => {
-    cancelHide()
-    showMainWindow()
-  })
-
-  tray.on('mouse-leave', () => {
-    scheduleHide()
-  })
-
-  // 保留点击作为备选：双重触发更稳
+  // 点击顶部图标切换窗口显示/隐藏
   tray.on('click', () => {
     if (mainWindow?.isVisible()) {
       mainWindow.hide()
     } else {
-      cancelHide()
       showMainWindow()
     }
   })
