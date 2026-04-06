@@ -20,6 +20,7 @@ export default function App() {
   const [feedbackText, setFeedbackText] = useState('')
   const [feedbackLoading, setFeedbackLoading] = useState(false)
   const [completed, setCompleted] = useState(false)
+  const [evalHover, setEvalHover] = useState<'yes' | 'no' | null>(null)
 
   // 设置
   const [vaultPath, setVaultPath] = useState('')
@@ -140,12 +141,34 @@ export default function App() {
       {/* ====== 输入阶段 ====== */}
       {phase === 'input' && (
         <div className="phase-content fade-in">
-          <div style={{ marginTop: 'auto' }}>
-            <div style={{ position: 'relative' }}>
+          <div style={{ marginTop: 'auto', width: '100%', padding: '0 10px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
+              <span style={{ fontSize: '24px', fontFamily: 'var(--font-hand)', color: 'var(--on-surface)', fontWeight: 'normal' }}>
+                我要在
+              </span>
+              <span style={{ 
+                color: '#a855f7', 
+                fontWeight: 'bold', 
+                fontSize: '36px',
+                fontFamily: "'Space Grotesk', sans-serif",
+                transform: 'rotate(-5deg) translateY(-2px)',
+                display: 'inline-block'
+              }}>
+                {duration}
+              </span>
+              <span style={{ fontSize: '24px', fontFamily: 'var(--font-hand)', color: 'var(--on-surface)', fontWeight: 'normal' }}>
+                分钟内，
+              </span>
+            </div>
+            <div style={{ fontSize: '24px', fontFamily: 'var(--font-hand)', color: 'var(--on-surface)', fontWeight: 'normal', marginTop: '4px' }}>
+              做完
+            </div>
+
+            <div style={{ position: 'relative', margin: '24px 0 16px 0' }}>
               <input
                 className="task-input"
                 type="text"
-                placeholder="捕捉灵感..."
+                placeholder=""
                 value={taskName}
                 onChange={(e) => setTaskName(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleStart()}
@@ -154,9 +177,11 @@ export default function App() {
               />
               {/* 手绘波浪下划线 */}
               <svg className="sketchy-underline" preserveAspectRatio="none" viewBox="0 0 100 10">
-                <path d="M0,5 Q25,2 50,5 T100,5" />
+                <path d="M0,5 Q25,2 50,5 T100,5" strokeWidth="1.5" fill="none" />
               </svg>
             </div>
+
+
           </div>
 
           <div className="duration-section">
@@ -239,7 +264,12 @@ export default function App() {
             <div className="evaluate-underline" />
 
             <div className="evaluate-buttons">
-              <button className="eval-btn eval-yes" onClick={() => handleEvaluate(true)}>
+              <button 
+                className="eval-btn eval-yes" 
+                onClick={() => handleEvaluate(true)}
+                onMouseEnter={() => setEvalHover('yes')}
+                onMouseLeave={() => setEvalHover(null)}
+              >
                 <div className="eval-highlight" />
                 <div className="eval-icon-box">
                   <span className="material-symbols-outlined">check</span>
@@ -247,7 +277,12 @@ export default function App() {
                 <span className="eval-btn-text">是的</span>
               </button>
 
-              <button className="eval-btn eval-no" onClick={() => handleEvaluate(false)}>
+              <button 
+                className="eval-btn eval-no" 
+                onClick={() => handleEvaluate(false)}
+                onMouseEnter={() => setEvalHover('no')}
+                onMouseLeave={() => setEvalHover(null)}
+              >
                 <div className="eval-highlight" />
                 <div className="eval-icon-box">
                   <span className="material-symbols-outlined">close</span>
@@ -261,9 +296,17 @@ export default function App() {
               <div className="mood-glow" />
               <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeWidth="3" viewBox="0 0 100 100">
                 <path d="M20,50 Q20,20 50,20 Q80,20 80,50 Q80,80 50,80 Q20,80 20,50" />
-                <circle cx="35" cy="45" r="3" fill="currentColor" />
-                <circle cx="65" cy="45" r="3" fill="currentColor" />
-                <path d="M40,65 Q50,60 60,65" />
+                <circle cx="35" cy="45" r="4" fill="currentColor" />
+                <circle cx="65" cy="45" r="4" fill="currentColor" stroke="none" />
+                {evalHover === 'yes' && (
+                  <path d="M 35 65 Q 50 80 65 65" />
+                )}
+                {evalHover === 'no' && (
+                  <path d="M 35 70 Q 50 55 65 70" />
+                )}
+                {evalHover === null && (
+                  <path d="M 40 68 L 60 68" />
+                )}
               </svg>
             </div>
           </div>
